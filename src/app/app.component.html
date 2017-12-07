@@ -1,17 +1,16 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li routerLinkActive="active"><a routerLink="/weather">Home</a></li>
-      <li routerLinkActive="active"><a routerLink="/admin">Admin</a></li>
-      <li routerLinkActive="active"><a routerLink="/user">User</a></li>
-      <li routerLinkActive="active"><a routerLink="/chart">Chart</a>
-      <li routerLinkActive="active"><a routerLink="/login">Login</a>
-      <li routerLinkActive="active"><a routerLink="/registration">Registration</a></li>
+      <li routerLinkActive="active" *ngIf="isAdmin"><a routerLink="/admin">Admin</a></li>
+      <li routerLinkActive="active" *ngIf="isUser"><a routerLink="/user">User</a></li>
+      <li routerLinkActive="active" *ngIf="isUser"><a routerLink="/chart">Chart</a>
+      <li routerLinkActive="active" *ngIf="!isUser"><a routerLink="/registration">Registration</a></li>
+      <li routerLinkActive="active" *ngIf="!isUser"><a routerLink="/login">Login</a></li>
     </ul>
-    <ul class="nav navbar-right">
-      <li>
-        <button class="btn navbar-btn" (click)="logout()">Logout</button>
-      </li>
+    <ul class="navbar-right">
+      <p class="navbar-text" *ngIf="isAdmin">You are admin!</p>
+      <p class="navbar-text" *ngIf="isUser">You are user!</p>
+      <button class="btn navbar-btn" *ngIf="isUser" (click)="logout()">Logout</button>
     </ul>
   </div>
 </nav>

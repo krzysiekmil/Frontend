@@ -1,28 +1,27 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {WeatherComponent} from './weather/weather.component';
 import {AdminComponent} from './admin/admin.component';
 import {UserComponent} from './user/user.component';
 import {ChartComponent} from './chart/chart.component';
 import {LoginComponent} from "./login/login.component";
 import {RegistrationComponent} from "./registration/registration.component";
+import {AdminGuard} from "./guards/admin.guard";
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   {
-    path: ' ', redirectTo: 'chart', pathMatch: 'full'
+    path: ' ', redirectTo: 'user', pathMatch: 'full'
   },
   {
-    path: 'weather',
-    component: WeatherComponent
-  },
-  {
-    path: 'admin_role',
-    component: AdminComponent
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'user',
-    component: UserComponent
+    component: UserComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'chart',
@@ -35,6 +34,11 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegistrationComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/user'
+
   }
 ];
 
