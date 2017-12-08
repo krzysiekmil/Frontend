@@ -16,12 +16,19 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUserCityList;
+    this.cityList;
 
   }
 
   addCityToList(name: string, citynName: string) {
-    this.dataService.addCityToUser(name, citynName).subscribe(result => this.currentUserCityList = result);
+    this.dataService.addCityToUser(name, citynName);
   }
+
+  getUserCity() {
+    this.dataService.getCityListForUser(this.userService.userName);
+  }
+
 
   getCityList() {
     this.dataService.getCityList().subscribe(result => this.cityList = result);

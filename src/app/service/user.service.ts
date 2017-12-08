@@ -8,6 +8,7 @@ export class UserService {
   jwtHelper: JwtHelper = new JwtHelper();
   accessToken: string;
   admin_role: boolean;
+  userName: string;
 
   constructor() {
   }
@@ -16,8 +17,10 @@ export class UserService {
     let decodedToken = this.jwtHelper.decodeToken(accessTokens);
     console.log(decodedToken);
     this.admin_role = decodedToken.authorities.some(role => role === 'ADMIN_USER');
+    this.userName = decodedToken.get("user_name");
     this.accessToken = accessTokens;
     localStorage.setItem(TOKEN_NAME, this.accessToken);
+
   }
 
   logout() {
