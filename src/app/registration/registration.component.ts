@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {RegistrationService} from "../service/registration.service";
 import {UserService} from "../service/user.service";
 import {Router} from "@angular/router";
-import {User} from "../model/user";
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +11,6 @@ import {User} from "../model/user";
 export class RegistrationComponent implements OnInit {
   model: any = {};
   redirectUrl: string;
-  loading: boolean;
   error: string;
 
   constructor(private registrationService: RegistrationService
@@ -25,12 +23,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   registration() {
-    this.loading = true;
-    let user = new User(this.model.username, this.model.password)
-    this.registrationService.registration(user)
+    // let user = new User(this.model.username, this.model.password)
+    this.registrationService.registration(this.model.username, this.model.password)
       .subscribe(
         result => {
-          this.loading = false;
           if (result) {
             this.userService.login(result);
             this.router.navigate(['/login']);
@@ -41,7 +37,6 @@ export class RegistrationComponent implements OnInit {
         },
         error => {
           this.error = "Error";
-          this.loading = false;
         }
       )
   }

@@ -19,13 +19,13 @@ export class RegistrationService {
     return Observable.throw(error.status);
   }
 
-  registration(user: User): Observable<string> {
-    // let body = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-    // let header = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+  registration(username: string, password: string): Observable<string> {
     let header = new Headers({'Content-Type': 'application/json'});
-    //let body = new User(username,password);
     let options = new RequestOptions({headers: header});
-    return this.http.post(this.addUrl, user, options).map(res => res.status).catch(this.handleError);
+    let body = new User();
+    body.username = username;
+    body.password = password;
+    return this.http.post(this.addUrl, body, options).map(res => res.status).catch(this.handleError);
   }
 
 }
