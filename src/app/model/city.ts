@@ -1,15 +1,15 @@
 export class City {
   public id: number;
-  private _name: string;
+  private name: string;
 
   constructor() {
   }
 
-  public get name(): string {
-    return this._name;
+  public getname(): string {
+    return this.name;
   }
 
-  public set name(value: string) {
-    this._name = value;
+  public setname(value: string) {
+    this.name = value;
   }
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from "../service/data.service";
 import {City} from "../model/city";
-import {CityData} from "../model/cityData";
+import {CityData} from "../model/cityData"
 
 
 @Component({
@@ -15,6 +15,7 @@ export class ChartComponent implements OnInit {
   public lineChartData: any[] = [];
   public lineChartLabels: Array<any> = [];
   public chartData: Array<any[]> = [];
+  public dataSets: Array<{ data: Array<any[]> | any[], label: string }>;
 
   public constructor(private dataService: DataService) {
   }
@@ -73,14 +74,18 @@ export class ChartComponent implements OnInit {
   }
 
   public getCityData(name: string) {
+    let count = 1;
     return this.dataService.getTempCity(name).subscribe(
       data => {
         this.currentCityData = data;
         this.currentCityData.forEach(cd => {
           this.lineChartData.push(cd.temp);
-          this.lineChartLabels.push(cd.time);
+          if (count <= 10) {
+            count++;
+            this.lineChartLabels.push(cd.time);
+          }
         });
-        this.chartData.push(this.lineChartData);
+        this.chartData.push(this.lineChartData)
         this.lineChartLabels = this.lineChartLabels.slice();
         this.lineChartData = this.lineChartData.slice();
       });

@@ -8,6 +8,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {AdminGuard} from "./guards/admin.guard";
 import {AuthGuard} from "./guards/auth.guard";
+import {WelcomeComponent} from "./welcome/welcome.component";
 
 const routes: Routes = [
   {
@@ -37,10 +38,16 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/user'
-
-  }
-];
+    redirectTo: '/welcome'
+  },
+  {
+    path: 'welcome',
+    component: WelcomeComponent
+  },
+  {
+    path: 'charts/:name',
+    component: ChartComponent
+  }];
 
 @NgModule({
   imports: [

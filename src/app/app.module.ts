@@ -18,6 +18,8 @@ import {AuthenticationService} from "./service/authenticatoion.service";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 import {TOKEN_NAME} from "./service/auth.constant";
 import {RegistrationService} from "./service/registration.service";
+import {AdminGuard} from "./guards/admin.guard";
+import {WelcomeComponent} from './welcome/welcome.component';
 
 
 export function authHttpServiceFactory(http: Http) {
@@ -39,7 +41,8 @@ export function authHttpServiceFactory(http: Http) {
     UserComponent,
     ChartComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    WelcomeComponent
 
   ],
   imports: [
@@ -55,9 +58,8 @@ export function authHttpServiceFactory(http: Http) {
     DataService,
     {provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http]},
     AuthenticationService,
-    AuthGuard
-
-
+    AuthGuard,
+    AdminGuard
   ],
   bootstrap: [AppComponent],
 })

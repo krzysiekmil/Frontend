@@ -6,6 +6,8 @@
       <li routerLinkActive="active" *ngIf="isUser"><a routerLink="/chart">Chart</a>
       <li routerLinkActive="active" *ngIf="!isUser"><a routerLink="/registration">Registration</a></li>
       <li routerLinkActive="active" *ngIf="!isUser"><a routerLink="/login">Login</a></li>
+      <li routerLinkActive="active" *ngIf="isUser"><a *ngFor="let city of CityList" [routerLink]="['/chart',city.name]">{{city.name}}</a>
+      </li>
     </ul>
     <ul class="navbar-right">
       <p class="navbar-text" *ngIf="isAdmin">You are admin!</p>

@@ -5,11 +5,12 @@ import {TOKEN_AUTH_PASSWORD, TOKEN_AUTH_USERNAME} from "./auth.constant";
 @Injectable()
 export class AuthenticationService {
   static AUTH_TOKEN = '/oauth/token';
-
+  username: string;
   constructor(private http: Http) {
   }
 
   login(username: string, password: string) {
+    this.username = username;
     const body = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`;
 
     const headers = new Headers();

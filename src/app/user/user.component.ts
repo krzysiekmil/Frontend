@@ -16,21 +16,28 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUserCityList;
-    this.cityList;
-
+    this.getCityList();
+    this.getUserCity()
   }
 
-  addCityToList(name: string, citynName: string) {
-    this.dataService.addCityToUser(name, citynName);
+  addCityToList(cityName: string) {
+    this.dataService.addCityToUser(cityName).subscribe(this.getCityList);
   }
 
   getUserCity() {
-    this.dataService.getCityListForUser(this.userService.userName);
+    this.dataService.getCityListForUser().subscribe(result => this.currentUserCityList = result);
+  }
+
+  deleteCity(cityName: string) {
+    this.dataService.deleteCityFromUserList(cityName).subscribe(this.getUserCity);
   }
 
 
   getCityList() {
     this.dataService.getCityList().subscribe(result => this.cityList = result);
+  }
+
+  isOnList(cityName: string) {
+    return this.currentUserCityList.some(result => result.name == cityName);
   }
 }

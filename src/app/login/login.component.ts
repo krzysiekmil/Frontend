@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   error = '';
   redirectUrl: string;
+  userName: string;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -28,17 +29,19 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loading = true;
+    this.userName = this.model.username;
     this.authSerivice.login(this.model.username, this.model.password)
       .subscribe(
         result => {
           this.loading = false;
+          console.log(this.userName);
           if (result) {
             this.userService.login(result);
             if (this.redirectUrl) {
               this.router.navigateByUrl(this.redirectUrl);
             }
             else {
-              this.router.navigate(['/']);
+              this.router.navigate(['user']);
             }
           }
           else {

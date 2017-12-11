@@ -1,0 +1,10 @@
+<h1>Select city for you</h1>
+<table>
+  <tr *ngFor="let City of cityList">
+    <td>{{City.name}}</td>
+    <td>
+      <button type="button" class="btn btn-danger" *ngIf="isOnList" (click)="deleteCity(City.name)">Delete</button>
+      <button type="button" class="btn btn-success" *ngIf="isOnList" (click)="addCityToList(City.name)">Add</button>
+    </td>
+  </tr>
+</table>

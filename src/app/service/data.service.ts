@@ -6,6 +6,7 @@ import {Headers, Http, RequestOptions, Response, URLSearchParams} from '@angular
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch"
 import {User} from "../model/user";
+import {AuthenticationService} from "./authenticatoion.service";
 
 @Injectable()
 export class DataService {
@@ -15,10 +16,10 @@ export class DataService {
   private addCityURL = 'http://localhost:8080/city';
   private deleteCityURL = 'http://localhost:8080/city';
   private getCityListURL = 'http://localhost:8080/city';
-  private userUrl = 'http://localhost:8080/city';
+  private userUrl = 'http://localhost:8080/user';
 
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private auth: AuthenticationService) {
   }
 
   private handleError(error: Response | any) {
@@ -79,22 +80,32 @@ export class DataService {
       .catch(this.handleError);
   }
 
-  public getCityListForUser(name: string): Observable<City[]> {
+  public getCityListForUser(): Observable<City[]> {
     let cpHeaders = new Headers({'Content-Type': 'application/json'});
     let cpParams = new URLSearchParams();
-    cpParams.set('name', name);
+    cpParams.set('name', this.auth.username);
+    console.log(this.auth.username);
     let option = new RequestOptions({headers: cpHeaders, params: cpParams});
     return this.http.get(this.userUrl, option).map(this.extractData).catch(this.handleError);
   }
 
-  public addCityToUser(name: string, cityName: string) {
+  public addCityToUser(cityName: string) {
     let header = new Headers({'Content-Type': 'application/json'})
     let param = new URLSearchParams();
     param.set('city', cityName);
     let option = new RequestOptions({headers: header, params: param});
     let body = new User();
-    body.username = name;
+    body.username = this.auth.username;
+    console.log(body.username);
     return this.http.post(this.userUrl, body, option);
+  }
+
+  public deleteCityFromUserList(cityName: string) {
+    let header = new Headers({'Content-Type': 'application/json'})
+    let param = new URLSearchParams();
+    param.set('city', cityName);
+    let option = new RequestOptions({headers: header, params: param})
+    return this.http.delete(this.userUrl + "/" + this.auth.username, option);
   }
 
   public login(username: string, password: string): void {
