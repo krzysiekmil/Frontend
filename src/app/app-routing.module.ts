@@ -36,18 +36,19 @@ const routes: Routes = [
     path: 'registration',
     component: RegistrationComponent
   },
-  {
-    path: '**',
-    redirectTo: '/welcome'
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: '/welcome'
+  // },
   {
     path: 'welcome',
     component: WelcomeComponent
   },
   {
-    path: 'charts/:name',
+    path: 'chart/:name',
     component: ChartComponent
-  }];
+  }
+];
 
 @NgModule({
   imports: [

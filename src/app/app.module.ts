@@ -59,7 +59,8 @@ export function authHttpServiceFactory(http: Http) {
     {provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http]},
     AuthenticationService,
     AuthGuard,
-    AdminGuard
+    AdminGuard,
+    UserComponent
   ],
   bootstrap: [AppComponent],
 })

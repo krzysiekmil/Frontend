@@ -17,6 +17,7 @@ export class DataService {
   private deleteCityURL = 'http://localhost:8080/city';
   private getCityListURL = 'http://localhost:8080/city';
   private userUrl = 'http://localhost:8080/user';
+  public cityList: City[] = [];
 
 
   constructor(private http: Http, private auth: AuthenticationService) {
@@ -106,9 +107,5 @@ export class DataService {
     param.set('city', cityName);
     let option = new RequestOptions({headers: header, params: param})
     return this.http.delete(this.userUrl + "/" + this.auth.username, option);
-  }
-
-  public login(username: string, password: string): void {
-    return
   }
 }

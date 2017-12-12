@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from "../service/data.service";
 import {City} from "../model/city";
-import {UserService} from "../service/user.service";
 
 @Component({
   selector: 'app-user',
@@ -9,15 +8,17 @@ import {UserService} from "../service/user.service";
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  cityList: City[];
-  currentUserCityList: City[];
+  cityList: City[] = [];
+  currentUserCityList: City[] = [];
+  city: City;
 
-  constructor(private dataService: DataService, private userService: UserService) {
+  constructor(public dataService: DataService) {
   }
 
   ngOnInit() {
     this.getCityList();
-    this.getUserCity()
+    this.getUserCity();
+
   }
 
   addCityToList(cityName: string) {
@@ -25,19 +26,21 @@ export class UserComponent implements OnInit {
   }
 
   getUserCity() {
-    this.dataService.getCityListForUser().subscribe(result => this.currentUserCityList = result);
+    this.dataService.getCityListForUser().subscribe(result => this.currentUserCityList = result)
   }
 
   deleteCity(cityName: string) {
+    let index = this.cityList.findIndex(c => c.name === cityName);
+    this.currentUserCityList.splice(index, 1);
     this.dataService.deleteCityFromUserList(cityName).subscribe(this.getUserCity);
-  }
 
+  }
 
   getCityList() {
     this.dataService.getCityList().subscribe(result => this.cityList = result);
   }
 
-  isOnList(cityName: string) {
-    return this.currentUserCityList.some(result => result.name == cityName);
+  isOnList(city: City) {
+    return this.currentUserCityList.find(c => c.name == city.name);
   }
 }

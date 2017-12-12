@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService} from "../service/data.service";
 import {City} from "../model/city";
 import {CityData} from "../model/cityData"
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html'
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnDestroy {
   cityList: City[];
   public cityData: CityData;
   public currentCityData: CityData[];
@@ -16,8 +17,10 @@ export class ChartComponent implements OnInit {
   public lineChartLabels: Array<any> = [];
   public chartData: Array<any[]> = [];
   public dataSets: Array<{ data: Array<any[]> | any[], label: string }>;
+  public name: string;
+  private sub: any;
 
-  public constructor(private dataService: DataService) {
+  public constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
 
@@ -55,8 +58,15 @@ export class ChartComponent implements OnInit {
   public lineChartType = 'line';
 
   ngOnInit() {
-    this.getCity();
+    this.sub = this.route.params.subscribe(params => {
+      this.name = params['name'];
+    })
+    // this.getCity();
+    this.getCityData(this.name);
+  }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   public getCity() {
@@ -65,6 +75,8 @@ export class ChartComponent implements OnInit {
       this.cityList.forEach(city => {
         this.getCityData(city.name);
         this.chartData = this.chartData.slice();
+        this.chartData.push(this.lineChartData);
+        this.lineChartData = [];
       });
     });
   }
@@ -74,22 +86,18 @@ export class ChartComponent implements OnInit {
   }
 
   public getCityData(name: string) {
-    let count = 1;
     return this.dataService.getTempCity(name).subscribe(
       data => {
         this.currentCityData = data;
         this.currentCityData.forEach(cd => {
           this.lineChartData.push(cd.temp);
-          if (count <= 10) {
-            count++;
-            this.lineChartLabels.push(cd.time);
-          }
+          this.lineChartLabels.push(cd.time);
         });
-        this.chartData.push(this.lineChartData)
         this.lineChartLabels = this.lineChartLabels.slice();
         this.lineChartData = this.lineChartData.slice();
-      });
+      })
   }
+
 
   // events
   public chartClicked(e: any): void {

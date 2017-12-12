@@ -3,8 +3,10 @@
   <tr *ngFor="let City of cityList">
     <td>{{City.name}}</td>
     <td>
-      <button type="button" class="btn btn-danger" *ngIf="isOnList" (click)="deleteCity(City.name)">Delete</button>
-      <button type="button" class="btn btn-success" *ngIf="isOnList" (click)="addCityToList(City.name)">Add</button>
+      <button type="button" class="btn btn-danger" *ngIf="isOnList(City)" (click)="deleteCity(City.name)">Delete
+      </button>
+      <button type="button" class="btn btn-success" *ngIf="!isOnList(City)" (click)="addCityToList(City.name)">Add
+      </button>
     </td>
   </tr>
 </table>

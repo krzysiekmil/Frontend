@@ -1,6 +1,6 @@
 export class City {
   public id: number;
-  private name: string;
+  public name: string;
 
   constructor() {
   }
