@@ -90,6 +90,10 @@ export class DataService {
     return this.http.get(this.userUrl, option).map(this.extractData).catch(this.handleError);
   }
 
+  public refreshData() {
+    return this.http.post(this.cityData, null, null).map(success => success.status).catch(this.handleError);
+  }
+
   public addCityToUser(cityName: string) {
     let header = new Headers({'Content-Type': 'application/json'})
     let param = new URLSearchParams();

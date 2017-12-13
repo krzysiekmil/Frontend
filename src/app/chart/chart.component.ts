@@ -19,7 +19,9 @@ export class ChartComponent implements OnInit, OnDestroy {
   public dataSets: Array<{ data: Array<any[]> | any[], label: string }>;
   public name: string;
   private sub: any;
-
+  private nameLast: string;
+  private tempLast: any;
+  private timeLast: any;
   public constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
@@ -32,16 +34,16 @@ export class ChartComponent implements OnInit, OnDestroy {
       backgroundColor: 'rgba(148,159,177,0.2)',
       borderColor: 'rgba(148,159,177,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
+      pointBorderColor: '#6effd1',
+      pointHoverBackgroundColor: '#ff646e',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },
     { // dark grey
       backgroundColor: 'rgba(77,83,96,0.2)',
       borderColor: 'rgba(77,83,96,1)',
       pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
+      pointBorderColor: '#ff4653',
+      pointHoverBackgroundColor: '#ff33f9',
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     },
 
@@ -49,8 +51,8 @@ export class ChartComponent implements OnInit, OnDestroy {
       backgroundColor: 'rgba(148,159,177,0.2)',
       borderColor: 'rgba(148,159,177,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
+      pointBorderColor: '#d0ff8a',
+      pointHoverBackgroundColor: '#27ff82',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     }
   ];
@@ -60,11 +62,22 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.name = params['name'];
-    })
-    // this.getCity();
+    });
     this.getCityData(this.name);
   }
 
+  ngDoCheck() {
+    if (this.name != this.nameLast) {
+      this.nameLast = this.name;
+      this.getCityData(this.name);
+    }
+  }
+
+  setTempAndTime() {
+    this.tempLast = this.currentCityData.find(d => d.id > 0).temp;
+    this.timeLast = this.currentCityData.find(d => d.id > 0).time;
+
+  }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
@@ -93,6 +106,9 @@ export class ChartComponent implements OnInit, OnDestroy {
           this.lineChartData.push(cd.temp);
           this.lineChartLabels.push(cd.time);
         });
+        this.setTempAndTime();
+        this.lineChartData.reverse();
+        this.lineChartLabels.reverse();
         this.lineChartLabels = this.lineChartLabels.slice();
         this.lineChartData = this.lineChartData.slice();
       })
@@ -106,6 +122,12 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   public chartHovered(e: any): void {
     console.log(e);
+  }
+
+  public refresh() {
+    console.log("component");
+    this.dataService.refreshData().subscribe();
+    this.getCityData(this.name);
   }
 
 }

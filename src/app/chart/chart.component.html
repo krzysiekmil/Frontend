@@ -1,9 +1,12 @@
+<h1>{{name}} current temp: {{tempLast}} time:{{timeLast}} </h1>
+<button (click)="refresh()">Refresh</button>
+
 <div class="row">
   <div class="col-md-6">
     <div style="display: block;">
       <canvas baseChart width="400" height="400"
-              [data]="chartData"
-              [labels]="label"
+              [data]="lineChartData"
+              [labels]="lineChartLabels"
               [options]="lineChartOptions"
               [colors]="lineChartColors"
               [legend]="lineChartLegend"

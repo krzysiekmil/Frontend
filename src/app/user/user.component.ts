@@ -11,6 +11,7 @@ export class UserComponent implements OnInit {
   cityList: City[] = [];
   currentUserCityList: City[] = [];
   city: City;
+  change: boolean;
 
   constructor(public dataService: DataService) {
   }
@@ -18,11 +19,13 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.getCityList();
     this.getUserCity();
+    this.change = false;
 
   }
 
   addCityToList(cityName: string) {
     this.dataService.addCityToUser(cityName).subscribe(this.getCityList);
+
   }
 
   getUserCity() {
@@ -33,7 +36,7 @@ export class UserComponent implements OnInit {
     let index = this.cityList.findIndex(c => c.name === cityName);
     this.currentUserCityList.splice(index, 1);
     this.dataService.deleteCityFromUserList(cityName).subscribe(this.getUserCity);
-
+    this.change = true;
   }
 
   getCityList() {

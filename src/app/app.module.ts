@@ -60,7 +60,8 @@ export function authHttpServiceFactory(http: Http) {
     AuthenticationService,
     AuthGuard,
     AdminGuard,
-    UserComponent
+    UserComponent,
+    AdminComponent
   ],
   bootstrap: [AppComponent],
 })
