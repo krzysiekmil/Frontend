@@ -45,6 +45,6 @@ export class UserComponent implements OnInit {
   }
 
   isOnList(city: City) {
-    return this.currentUserCityList.find(c => c.name == city.name);
+    return this.currentUserCityList.find(c => c.name === city.name);
   }
 }
