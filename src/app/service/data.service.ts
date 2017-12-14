@@ -19,6 +19,7 @@ export class DataService {
   private getCityListURL = 'http://localhost:8080/city';
   private userUrl = 'http://localhost:8080/user';
   private state: boolean;
+  private code: any;
   public cityList: City[] = [];
 
 
@@ -118,7 +119,11 @@ export class DataService {
   }
 
   public refreshData() {
-    return this.http.post(this.cityData, null, null).map(success => success.status).catch(this.handleError);
+    return this.http.post(this.cityData, null, null).map(
+      success => {
+        this.code = success.status,
+          this.getUser();
+      }).catch(this.handleError);
   }
 
   public addCityToUser(cityName: string) {

@@ -22,6 +22,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   private nameLast: string;
   private tempLast: any;
   private timeLast: any;
+  private status: number;
   public constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
 
@@ -125,10 +126,14 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   public refresh(): void {
-    this.dataService.refreshData().subscribe()
-    this.lineChartLabels.splice(0, this.lineChartLabels.length)
+    this.dataService.refreshData().subscribe(code => {
+      this.status = code
+    });
+    this.lineChartLabels.splice(0, this.lineChartLabels.length);
     this.lineChartData = [];
-    setTimeout(this.getCityData(this.name), 2500);
+    if (this.status === 200 || this.status === 201) {
+      setTimeout(this.getCityData(this.name), 25000);
+    }
   }
 
 }
