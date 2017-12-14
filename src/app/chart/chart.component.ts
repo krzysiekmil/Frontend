@@ -126,8 +126,8 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   public refresh(): void {
     this.dataService.refreshData().subscribe()
+    this.lineChartLabels.splice(0, this.lineChartLabels.length)
     this.lineChartData = [];
-    this.lineChartLabels = [];
     setTimeout(this.getCityData(this.name), 2500);
   }
 
