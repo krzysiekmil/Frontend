@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
       .subscribe(
         result => {
           this.loading = false;
-          console.log(this.userName);
           if (result) {
             this.userService.login(result);
             if (this.redirectUrl) {

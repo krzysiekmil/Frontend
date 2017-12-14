@@ -7,6 +7,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch"
 import {User} from "../model/user";
 import {AuthenticationService} from "./authenticatoion.service";
+import {Role} from "../model/role";
 
 @Injectable()
 export class DataService {
@@ -17,10 +18,19 @@ export class DataService {
   private deleteCityURL = 'http://localhost:8080/city';
   private getCityListURL = 'http://localhost:8080/city';
   private userUrl = 'http://localhost:8080/user';
+  private state: boolean;
   public cityList: City[] = [];
 
 
   constructor(private http: Http, private auth: AuthenticationService) {
+  }
+
+  public getState(): boolean {
+    return this.state;
+  }
+
+  public setState(state: boolean) {
+    this.state = state;
   }
 
   private handleError(error: Response | any) {
@@ -30,6 +40,24 @@ export class DataService {
 
   private extractData(res: Response) {
     return res.json();
+  }
+
+  public getUser(): Observable<User[]> {
+    return this.http.get(this.userUrl, null).map(this.extractData).catch(this.handleError);
+  }
+
+  public updateRole(role: Role) {
+    let cpHeaders = new Headers({'Content-Type': 'application/json'});
+    let cpParams = new URLSearchParams();
+    let option = new RequestOptions({headers: cpHeaders, params: cpParams});
+    return this.http.put(this.userUrl, role, option).map(this.extractData).catch(this.handleError)
+  }
+
+  public update(user: User) {
+    let cpHeaders = new Headers({'Content-Type': 'application/json'});
+    let cpParams = new URLSearchParams();
+    let option = new RequestOptions({headers: cpHeaders, params: cpParams});
+    return this.http.put(this.userUrl, user, option).map(this.extractData).catch(this.handleError)
   }
 
 
@@ -85,7 +113,6 @@ export class DataService {
     let cpHeaders = new Headers({'Content-Type': 'application/json'});
     let cpParams = new URLSearchParams();
     cpParams.set('name', this.auth.username);
-    console.log(this.auth.username);
     let option = new RequestOptions({headers: cpHeaders, params: cpParams});
     return this.http.get(this.userUrl, option).map(this.extractData).catch(this.handleError);
   }

@@ -15,7 +15,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   public currentCityData: CityData[];
   public lineChartData: any[] = [];
   public lineChartLabels: Array<any> = [];
-  public chartData: Array<any[]> = [];
+  public chartData: Array<any> = [];
   public dataSets: Array<{ data: Array<any[]> | any[], label: string }>;
   public name: string;
   private sub: any;
@@ -124,10 +124,11 @@ export class ChartComponent implements OnInit, OnDestroy {
     console.log(e);
   }
 
-  public refresh() {
-    console.log("component");
-    this.dataService.refreshData().subscribe();
-    this.getCityData(this.name);
+  public refresh(): void {
+    this.dataService.refreshData().subscribe()
+    this.lineChartData = [];
+    this.lineChartLabels = [];
+    setTimeout(this.getCityData(this.name), 2500);
   }
 
 }

@@ -1,26 +1,12 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li routerLinkActive="active" *ngIf="isAdmin"><a routerLink="/admin">Admin</a></li>
+      <li routerLinkActive="active" *ngIf="isAdmin"><a routerLink="/admin">City Manager</a></li>
+      <li routerLinkActive="active" *ngIf="isAdmin"><a routerLink="/manager">User Manager</a></li>
       <li routerLinkActive="active" *ngIf="isUser"><a routerLink="/user">User</a></li>
       <li routerLinkActive="active" *ngIf="!isUser"><a routerLink="/registration">Registration</a></li>
       <li routerLinkActive="active" *ngIf="!isUser"><a routerLink="/login">Login</a></li>
       <li routerLinkActive="active" *ngIf="isUser"><a *ngFor="let city of cityList" routerLink="/chart/{{city.name}}">{{city.name}}</a>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" *ngIf="isUser" data-toggle="dropdown">City Weather<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li routerLinkActive="active"><a routerLink="/user">user</a></li>
-        </ul>
-      </li>
-      <li class="dropdown pointer">
-        <a class="dropdown-toggle" data-toggle="dropdown">Page 1
-          <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Page 1-1</a></li>
-          <li><a href="#">Page 1-2</a></li>
-          <li><a href="#">Page 1-3</a></li>
-        </ul>
       </li>
     </ul>
     <ul class="navbar-right">

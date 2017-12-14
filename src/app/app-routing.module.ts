@@ -9,6 +9,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {AdminGuard} from "./guards/admin.guard";
 import {AuthGuard} from "./guards/auth.guard";
 import {WelcomeComponent} from "./welcome/welcome.component";
+import {ManagerComponent} from "./manager/manager.component";
 
 const routes: Routes = [
   {
@@ -36,10 +37,10 @@ const routes: Routes = [
     path: 'registration',
     component: RegistrationComponent
   },
-  // {
-  //   path: '**',
-  //   redirectTo: '/welcome'
-  // },
+  {
+    path: 'manager',
+    component: ManagerComponent
+  },
   {
     path: 'welcome',
     component: WelcomeComponent
