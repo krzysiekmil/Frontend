@@ -19,11 +19,20 @@ export class DataService {
   private getCityListURL = 'http://localhost:8080/city';
   private userUrl = 'http://localhost:8080/user';
   private state: boolean;
-  private code: any;
+  private _code: any;
   public cityList: City[] = [];
 
 
   constructor(private http: Http, private auth: AuthenticationService) {
+  }
+
+
+  getcode(): any {
+    return this._code;
+  }
+
+  setcode(value: any) {
+    this._code = value;
   }
 
   public getState(): boolean {
@@ -61,7 +70,6 @@ export class DataService {
     return this.http.put(this.userUrl, user, option).map(this.extractData).catch(this.handleError)
   }
 
-
   public getTempCity(cityName: string): Observable<CityData[]> {
     return this.http.get(this.currentCityData + cityName, null)
       .map(this.extractData)
@@ -71,7 +79,6 @@ export class DataService {
   public getAllTemp(): Observable<CityData[]> {
     return this.http.get(this.cityData).map(this.extractData).catch(this.handleError);
   }
-
 
   public getTempCurrentCity(cityName: string, value: string): Observable<CityData[]> {
     let cpHeaders = new Headers({'Content-Type': 'application/json'});
@@ -118,15 +125,13 @@ export class DataService {
     return this.http.get(this.userUrl, option).map(this.extractData).catch(this.handleError);
   }
 
-  public refreshData() {
-    return this.http.post(this.cityData, null, null).map(
-      success => {
-        this.code = success.status,
-          this.getUser();
-      }).catch(this.handleError);
+  public refreshData(): Observable<number> {
+    return this.http.post(this.cityData, null, null)
+      .map(success => success.status)
+      .catch(this.handleError);
   }
 
-  public addCityToUser(cityName: string) {
+  public addCityToUser(cityName: string): Observable<number> {
     let header = new Headers({'Content-Type': 'application/json'})
     let param = new URLSearchParams();
     param.set('city', cityName);
@@ -134,14 +139,14 @@ export class DataService {
     let body = new User();
     body.username = this.auth.username;
     console.log(body.username);
-    return this.http.post(this.userUrl, body, option);
+    return this.http.post(this.userUrl, body, option).map(status => status.status);
   }
 
-  public deleteCityFromUserList(cityName: string) {
+  public deleteCityFromUserList(cityName: string): Observable<number> {
     let header = new Headers({'Content-Type': 'application/json'})
     let param = new URLSearchParams();
     param.set('city', cityName);
     let option = new RequestOptions({headers: header, params: param})
-    return this.http.delete(this.userUrl + "/" + this.auth.username, option);
+    return this.http.delete(this.userUrl + "/" + this.auth.username, option).map(status => status.status);
   }
 }

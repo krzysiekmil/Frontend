@@ -2,7 +2,6 @@
   temp: {{tempLast}}
   time: {{timeLast}} </h1>
 <button (click)="refresh()">Refresh</button>
-
 <div class="row">
   <div class="col-md-6">
     <div style="display: block;">
@@ -18,7 +17,9 @@
     </div>
   </div>
 </div>
-
+<ng-template #processing>
+  <img *ngIf="requestProcessing" src="assets/image/loading.gif">
+</ng-template>
 
 
 

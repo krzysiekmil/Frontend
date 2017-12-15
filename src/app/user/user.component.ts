@@ -9,7 +9,7 @@ import {City} from "../model/city";
 })
 export class UserComponent implements OnInit {
   cityList: City[] = [];
-  currentUserCityList: City[] = [];
+  userCityList: City[] = [];
   city: City;
 
   constructor(public dataService: DataService) {
@@ -23,28 +23,40 @@ export class UserComponent implements OnInit {
   }
 
   addCityToList(cityName: string) {
-    this.dataService.setState(true);
-
-    this.dataService.addCityToUser(cityName).subscribe(this.getCityList);
+    cityName[0].toLocaleUpperCase();
+    this.dataService.addCityToUser(cityName).subscribe(success => {
+      if (success === 200) {
+        let city = new City();
+        city.name = cityName;
+        this.userCityList.push(city);
+        this.dataService.setState(true);
+        console.log(this.userCityList);
+      }
+    });
 
   }
 
   getUserCity() {
-    this.dataService.getCityListForUser().subscribe(result => this.currentUserCityList = result)
+    this.dataService.getCityListForUser().subscribe(result => this.userCityList = result)
   }
 
   deleteCity(cityName: string) {
-    this.dataService.setState(true);
-    let index = this.cityList.findIndex(c => c.name === cityName);
-    this.currentUserCityList.splice(index, 1);
-    this.dataService.deleteCityFromUserList(cityName).subscribe(this.getUserCity);
+    this.dataService.deleteCityFromUserList(cityName).subscribe(success => {
+      if (success === 200) {
+        console.log(cityName)
+        this.dataService.setState(true);
+        let index = this.cityList.findIndex(c => c.name === cityName);
+        this.userCityList.splice(index - 1, 1);
+        console.log(this.userCityList);
+      }
+    });
   }
 
   getCityList() {
     this.dataService.getCityList().subscribe(result => this.cityList = result);
   }
 
-  isOnList(city: City) {
-    return this.currentUserCityList.find(c => c.name === city.name);
+  isOnList(city: City): boolean {
+    return this.userCityList.some(c => c.name == city.name);
   }
 }

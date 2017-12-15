@@ -21,9 +21,16 @@ export class AdminComponent implements OnInit {
   }
 
   addCity(cityName: string) {
-    this.dataService.addCityS(cityName).subscribe(this.getCityList);
-    this.getCityList();
-    this.change = true;
+    console.log(cityName)
+    this.dataService.addCityS(cityName).subscribe(status => {
+      if (status === 200) {
+        console.log(cityName);
+        this.change = true;
+        let city = new City()
+        city.name = cityName;
+        this.cityList.push(city);
+      }
+    });
     console.log(this.change);
   }
 

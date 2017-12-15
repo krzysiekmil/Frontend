@@ -23,13 +23,14 @@ export class ChartComponent implements OnInit, OnDestroy {
   private tempLast: any;
   private timeLast: any;
   private status: number;
+
   public constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
-
 
   public lineChartOptions: any = {
     responsive: true
   };
+
   public lineChartColors: Array<any> = [
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
@@ -57,7 +58,9 @@ export class ChartComponent implements OnInit, OnDestroy {
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     }
   ];
+
   public lineChartLegend = true;
+
   public lineChartType = 'line';
 
   ngOnInit() {
@@ -79,6 +82,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.timeLast = this.currentCityData.find(d => d.id > 0).time;
 
   }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
@@ -115,8 +119,6 @@ export class ChartComponent implements OnInit, OnDestroy {
       })
   }
 
-
-  // events
   public chartClicked(e: any): void {
     console.log(e);
   }
@@ -125,16 +127,12 @@ export class ChartComponent implements OnInit, OnDestroy {
     console.log(e);
   }
 
-  public refresh(): void {
-    this.dataService.refreshData().subscribe(code => {
-      this.status = code
+  public refresh() {
+    this.dataService.refreshData().subscribe(successCode => {
+      if (successCode === 200) {
+        this.getCityData(this.name);
+      }
     });
-    this.lineChartLabels.splice(0, this.lineChartLabels.length);
-    this.lineChartData = [];
-    if (this.status === 200 || this.status === 201) {
-      setTimeout(this.getCityData(this.name), 25000);
-    }
   }
-
 }
 
