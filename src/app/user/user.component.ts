@@ -45,8 +45,8 @@ export class UserComponent implements OnInit {
       if (success === 200) {
         console.log(cityName)
         this.dataService.setState(true);
-        let index = this.cityList.findIndex(c => c.name === cityName);
-        this.userCityList.splice(index - 1, 1);
+        let index = this.userCityList.findIndex(c => c.name === cityName);
+        this.userCityList.splice(index, 1);
         console.log(this.userCityList);
       }
     });
