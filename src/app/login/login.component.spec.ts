@@ -6,7 +6,6 @@ import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {AuthenticationService} from "../service/authenticatoion.service";
 import {ConnectionBackend, Http, HttpModule} from "@angular/http";
 import {UserService} from "../service/user.service";
-import {Observable} from "rxjs/Observable";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -17,7 +16,7 @@ describe('LoginComponent', () => {
       imports: [FormsModule, RouterModule, HttpModule],
       declarations: [LoginComponent],
       providers: [{provide: Router, useClass: jasmine.createSpy('navigate')},
-        {provide: ActivatedRoute, useValue: {params: Observable.of('user')}},
+        {provide: ActivatedRoute, useValue: {queryParams: ('user')}},
         AuthenticationService, Http, ConnectionBackend,
         UserService]
     })
