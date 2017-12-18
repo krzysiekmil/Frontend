@@ -30,7 +30,6 @@ export class UserComponent implements OnInit {
         city.name = cityName;
         this.userCityList.push(city);
         this.dataService.setState(true);
-        console.log(this.userCityList);
       }
     });
 
@@ -43,11 +42,9 @@ export class UserComponent implements OnInit {
   deleteCity(cityName: string) {
     this.dataService.deleteCityFromUserList(cityName).subscribe(success => {
       if (success === 200) {
-        console.log(cityName)
         this.dataService.setState(true);
         let index = this.userCityList.findIndex(c => c.name === cityName);
         this.userCityList.splice(index, 1);
-        console.log(this.userCityList);
       }
     });
   }

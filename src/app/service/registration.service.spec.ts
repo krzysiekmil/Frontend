@@ -1,11 +1,13 @@
 import {inject, TestBed} from '@angular/core/testing';
 
 import {RegistrationService} from './registration.service';
+import {ConnectionBackend, Http, HttpModule} from "@angular/http";
 
 describe('RegistrationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RegistrationService]
+      imports: [HttpModule],
+      providers: [RegistrationService, Http, ConnectionBackend]
     });
   });
 

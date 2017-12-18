@@ -1,11 +1,13 @@
 import {inject, TestBed} from '@angular/core/testing';
 
 import {AuthenticationService} from './authenticatoion.service';
+import {ConnectionBackend, Http, HttpModule} from "@angular/http";
 
 describe('AuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthenticationService]
+      imports: [HttpModule],
+      providers: [AuthenticationService, Http, ConnectionBackend]
     });
   });
 

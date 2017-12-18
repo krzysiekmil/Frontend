@@ -24,7 +24,6 @@ export class AdminComponent implements OnInit {
     console.log(cityName)
     this.dataService.addCityS(cityName).subscribe(status => {
       if (status === 200) {
-        console.log(cityName);
         this.change = true;
         let city = new City()
         city.name = cityName;

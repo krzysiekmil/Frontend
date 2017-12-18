@@ -11,6 +11,7 @@ import {UserComponent} from "./user/user.component";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
+  private static test: any;
   ngOnInit() {
   }
   isLogout: boolean;
@@ -48,12 +49,10 @@ export class AppComponent implements OnInit, DoCheck, AfterViewChecked {
 
   cityForUser() {
     if (this.isUser) {
-      console.log(this.dataService.getState());
       if (this.dataService.getState()) {
-        console.log(this.dataService.getState());
         this.dataService.setState(false);
-        this.cityList = [];
         this.dataService.getCityListForUser().subscribe(data => this.cityList = data);
+
       }
     }
   }

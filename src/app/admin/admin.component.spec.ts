@@ -1,6 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AdminComponent} from './admin.component';
+import {DataService} from "../service/data.service";
+import {ConnectionBackend, Http, HttpModule} from "@angular/http";
+import {AuthenticationService} from "../service/authenticatoion.service";
+import {MockBackend} from "@angular/http/testing";
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -8,7 +12,11 @@ describe('AdminComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AdminComponent]
+      imports: [HttpModule],
+      declarations: [AdminComponent],
+      providers: [DataService, Http, AdminComponent, AuthenticationService,
+        {provide: ConnectionBackend, useClass: MockBackend}
+      ]
     })
       .compileComponents();
   }));
@@ -23,3 +31,4 @@ describe('AdminComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
