@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthenticationService} from "../service/authenticatoion.service";
 import {UserService} from "../service/user.service";
 
@@ -17,10 +17,8 @@ export class LoginComponent implements OnInit {
   userName: string;
 
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
               private authSerivice: AuthenticationService,
               private userService: UserService) {
-    this.redirectUrl = this.activatedRoute.snapshot.queryParams['redirectTo'];
   }
 
   ngOnInit(): void {
@@ -36,12 +34,8 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           if (result) {
             this.userService.login(result);
-            if (this.redirectUrl) {
-              this.router.navigateByUrl(this.redirectUrl);
-            }
-            else {
-              this.router.navigate(['user']);
-            }
+            this.router.navigate(['user']);
+
           }
           else {
             this.error = "ERROR";
