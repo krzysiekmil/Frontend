@@ -44,7 +44,7 @@ export function authHttpServiceFactory(http: Http) {
     LoginComponent,
     RegistrationComponent,
     WelcomeComponent,
-    ManagerComponent
+    ManagerComponent,
 
   ],
   imports: [

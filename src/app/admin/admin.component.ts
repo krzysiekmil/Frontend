@@ -8,29 +8,30 @@ import {DataService} from '../service/data.service';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  cityList: City[];
-  city: City;
-  change: boolean;
+  public cityList: City[] = [];
+  public city: City;
+  public change: boolean;
 
 
   constructor(private dataService: DataService) {
+    this.city = new City();
   }
 
+
   getCityList() {
-    this.dataService.getCityList().subscribe(data => this.cityList = data)
+    this.dataService.getCityList().subscribe(data => this.cityList = data);
+
   }
 
   addCity(cityName: string) {
-    console.log(cityName)
     this.dataService.addCityS(cityName).subscribe(status => {
-      if (status === 200) {
         this.change = true;
-        let city = new City()
-        city.name = cityName;
-        this.cityList.push(city);
-      }
+      let city = new City()
+      city.name = cityName;
+      this.cityList.push(city);
+      if (status !== 200)
+        alert("sie zjebalo");
     });
-    console.log(this.change);
   }
 
   deleteCity(cityName: string) {
