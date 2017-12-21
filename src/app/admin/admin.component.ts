@@ -10,7 +10,7 @@ import {DataService} from '../service/data.service';
 export class AdminComponent implements OnInit {
   public cityList: City[] = [];
   public city: City;
-  public change: boolean;
+  public change: boolean = null;
 
 
   constructor(private dataService: DataService) {
@@ -29,8 +29,6 @@ export class AdminComponent implements OnInit {
       let city = new City()
       city.name = cityName;
       this.cityList.push(city);
-      if (status !== 200)
-        alert("sie zjebalo");
     });
   }
 
