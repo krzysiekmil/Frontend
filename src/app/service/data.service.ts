@@ -26,7 +26,6 @@ export class DataService {
   constructor(private http: Http, private auth: AuthenticationService) {
   }
 
-
   getcode(): any {
     return this._code;
   }

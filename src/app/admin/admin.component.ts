@@ -9,7 +9,7 @@ import {DataService} from '../service/data.service';
 })
 export class AdminComponent implements OnInit {
   public cityList: City[] = [];
-  public city: City;
+  public city: City = {id: null, name: null};
   public change: boolean = null;
 
 
