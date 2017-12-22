@@ -19,10 +19,10 @@ export class ChartComponent implements OnInit, OnDestroy {
   public dataSets: Array<{ data: Array<any[]> | any[], label: string }>;
   public name: string;
   private sub: any;
-  private nameLast: string;
-  private tempLast: any;
-  private timeLast: any;
-  private status: number;
+  public nameLast: string;
+  public tempLast: any;
+  public timeLast: any;
+  public status: number;
 
   public constructor(private dataService: DataService, private route: ActivatedRoute) {
   }
@@ -77,11 +77,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
-  setTempAndTime() {
-    this.tempLast = this.currentCityData.find(d => d.id > 0).temp;
-    this.timeLast = this.currentCityData.find(d => d.id > 0).time;
 
-  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -111,7 +107,8 @@ export class ChartComponent implements OnInit, OnDestroy {
           this.lineChartData.push(cd.temp);
           this.lineChartLabels.push(cd.time);
         });
-        this.setTempAndTime();
+        this.tempLast = this.currentCityData.find(d => d.id > 0).temp;
+        this.timeLast = this.currentCityData.find(d => d.id > 0).time;
         this.lineChartData.reverse();
         this.lineChartLabels.reverse();
         this.lineChartLabels = this.lineChartLabels.slice();

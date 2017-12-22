@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   error = '';
   redirectUrl: string;
   userName: string;
+  public result: boolean;
 
   constructor(private router: Router,
               private authSerivice: AuthenticationService,
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         result => {
           this.loading = false;
+          this.result = result;
           if (result) {
             this.userService.login(result);
             this.router.navigate(['user']);

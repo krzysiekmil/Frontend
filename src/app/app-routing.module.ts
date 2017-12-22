@@ -39,7 +39,8 @@ const routes: Routes = [
   },
   {
     path: 'manager',
-    component: ManagerComponent
+    component: ManagerComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: 'welcome',
@@ -47,7 +48,8 @@ const routes: Routes = [
   },
   {
     path: 'chart/:name',
-    component: ChartComponent
+    component: ChartComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

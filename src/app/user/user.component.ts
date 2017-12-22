@@ -32,7 +32,6 @@ export class UserComponent implements OnInit {
         this.dataService.setState(true);
       }
     });
-
   }
 
   getUserCity() {
