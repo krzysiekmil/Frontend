@@ -44,14 +44,18 @@ describe('LoginComponent', () => {
     component.login();
     expect(spy).toHaveBeenCalled();
   }));
-  xit('should route after successful sing in', inject([AuthenticationService, UserService], (authService, userService) => {
-    spyOn(authService, 'login').and.returnValue(Observable.from([true]));
+  it('should route after successful sing in', inject([AuthenticationService, UserService], (authService, userService) => {
+    spyOn(authService, 'login').and.returnValue(Observable.empty());
     component.login();
-    console.log(component.result);
-    expect(router.navigate).toHaveBeenCalledWith("['user']");
+    expect(router.navigate).not.toHaveBeenCalledWith(['user']);
   }));
-  xit('should ngOnInit after start', inject([AuthenticationService, UserService], (authService, userService) => {
-    console.log(userService.accessToken + "&&&");
+  it('should route after successful sing in', inject([AuthenticationService, UserService], (authService, userService) => {
+    let response = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoiYXNkIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxNDQxMDM1OCwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkRfVVNFUiJdLCJqdGkiOiJiYjA3ZWQyOC1hOTJjLTRmOTgtOWJiZS1hODYxMDNhMzA0Y2QiLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQifQ.E2DdJFk40ZKkS6eAb7PgumPjsw6gprcDDZWWvHVnCAM';
+    spyOn(authService, 'login').and.returnValue(Observable.from([response]));
+    component.login();
+    expect(router.navigate).toHaveBeenCalledWith(['user']);
+  }));
+  it('should ngOnInit after start', inject([AuthenticationService, UserService], (authService, userService) => {
     component.ngOnInit();
     expect(userService.accessToken).toBe(null);
   }));

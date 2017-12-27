@@ -11,15 +11,15 @@ import {Role} from "../model/role";
 
 @Injectable()
 export class DataService {
-  private cityUrl = 'http://localhost:8080/city';
-  private cityData = 'http://localhost:8080/cityData';
-  private currentCityData = 'http://localhost:8080/cityDatat/';
-  private addCityURL = 'http://localhost:8080/city';
-  private deleteCityURL = 'http://localhost:8080/city';
-  private getCityListURL = 'http://localhost:8080/city';
-  private userUrl = 'http://localhost:8080/user';
-  private state: boolean;
-  private _code: any;
+  public cityUrl = 'http://localhost:8080/city';
+  public cityData = 'http://localhost:8080/cityData';
+  public currentCityData = 'http://localhost:8080/cityDatat/';
+  public addCityURL = 'http://localhost:8080/city';
+  public deleteCityURL = 'http://localhost:8080/city';
+  public getCityListURL = 'http://localhost:8080/city';
+  public userUrl = 'http://localhost:8080/user';
+  public state: boolean;
+  public _code: any;
   public cityList: City[] = [];
 
 

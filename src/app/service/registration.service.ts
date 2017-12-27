@@ -19,7 +19,7 @@ export class RegistrationService {
     return Observable.throw(error.status);
   }
 
-  registration(username: string, password: string): Observable<string> {
+  registration(username: string, password: string): Observable<number> {
     let header = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: header});
     let body = new User();

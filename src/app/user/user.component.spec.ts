@@ -56,7 +56,6 @@ describe('UserComponent', () => {
     let response = [[{"id": 27, "name": "Gdansk"}, {"id": 25, "name": "Warszawa"}, {"id": 26, "name": "Krakow"}]];
     spyOn(dataService, 'getCityListForUser').and.returnValue(Observable.from(response));
     component.getUserCity();
-    console.log(component.userCityList);
     expect(component.userCityList.length).toBe(3);
   }));
   it('should call server for user cityList', inject([DataService], (dataService) => {
@@ -69,8 +68,6 @@ describe('UserComponent', () => {
     component.deleteCity('Warszawa')
     expect(spy).toHaveBeenCalledWith('Warszawa');
   }));
-  xit('should delete city from cityList', () => {
-  });
   it('should call to server for all cityList', inject([DataService], (dataService) => {
     let spy = spyOn(dataService, 'getCityList').and.returnValue(Observable.empty());
     component.getCityList();

@@ -20,7 +20,6 @@ import {TOKEN_NAME} from "./service/auth.constant";
 import {RegistrationService} from "./service/registration.service";
 import {AdminGuard} from "./guards/admin.guard";
 import {WelcomeComponent} from './welcome/welcome.component';
-import {ManagerComponent} from './manager/manager.component';
 
 
 export function authHttpServiceFactory(http: Http) {
@@ -44,7 +43,6 @@ export function authHttpServiceFactory(http: Http) {
     LoginComponent,
     RegistrationComponent,
     WelcomeComponent,
-    ManagerComponent,
 
   ],
   imports: [

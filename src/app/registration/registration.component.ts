@@ -27,12 +27,8 @@ export class RegistrationComponent implements OnInit {
     this.registrationService.registration(this.model.username, this.model.password)
       .subscribe(
         result => {
-          if (result) {
-            this.userService.login(result);
-            this.router.navigate(['/login']);
-          }
-          else {
-            this.error = "ERROR";
+          if (result === 200) {
+            this.router.navigate(['login']);
           }
         },
         error => {

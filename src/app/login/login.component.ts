@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from "../service/authenticatoion.service";
 import {UserService} from "../service/user.service";
+import {isUndefined} from "util";
 
 
 @Component({
@@ -34,13 +35,10 @@ export class LoginComponent implements OnInit {
         result => {
           this.loading = false;
           this.result = result;
-          if (result) {
+          if (!isUndefined(result)) {
             this.userService.login(result);
             this.router.navigate(['user']);
 
-          }
-          else {
-            this.error = "ERROR";
           }
         },
         error => {
