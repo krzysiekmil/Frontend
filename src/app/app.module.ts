@@ -20,6 +20,7 @@ import {TOKEN_NAME} from "./service/auth.constant";
 import {RegistrationService} from "./service/registration.service";
 import {AdminGuard} from "./guards/admin.guard";
 import {WelcomeComponent} from './welcome/welcome.component';
+import {IonicApp, IonicModule} from "ionic-angular";
 
 
 export function authHttpServiceFactory(http: Http) {
@@ -50,7 +51,8 @@ export function authHttpServiceFactory(http: Http) {
     AppRoutingModule,
     HttpModule,
     ChartsModule,
-    FormsModule
+    FormsModule,
+    IonicModule.forRoot(AppComponent)
   ],
   providers: [
     RegistrationService,
@@ -63,6 +65,6 @@ export function authHttpServiceFactory(http: Http) {
     UserComponent,
     AdminComponent
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, IonicApp],
 })
 export class AppModule { }

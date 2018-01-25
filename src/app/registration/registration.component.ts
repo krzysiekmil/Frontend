@@ -23,7 +23,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   registration() {
-    // let user = new User(this.model.username, this.model.password)
     this.registrationService.registration(this.model.username, this.model.password)
       .subscribe(
         result => {
